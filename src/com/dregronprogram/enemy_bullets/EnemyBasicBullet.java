@@ -45,6 +45,9 @@ public class EnemyBasicBullet extends EnemyWeaponType{
 
 	@Override
 	public boolean collision(Rectangle rect) {
+		if (bullet != null && bullet.intersects(rect)) {
+			return true;
+		}
 		return false;
 	}
 

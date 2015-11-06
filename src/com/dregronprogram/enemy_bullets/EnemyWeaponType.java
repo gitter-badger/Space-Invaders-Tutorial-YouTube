@@ -16,4 +16,7 @@ public abstract class EnemyWeaponType {
 	
 	protected abstract void wallCollide(BasicBlocks blocks);
 	protected abstract void isOutofBounds();
+	
+	public abstract int getxPos();
+	public abstract int getyPos();
 }

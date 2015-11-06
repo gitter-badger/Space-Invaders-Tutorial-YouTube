@@ -15,6 +15,7 @@ import com.dregronprogram.display.Display;
 public class Player implements KeyListener{
 	
 	private final double speed = 5.0d;
+	private int health;
 	
 	private BufferedImage pSprite;
 	private Rectangle rect;
@@ -24,7 +25,6 @@ public class Player implements KeyListener{
 	
 	private boolean left = false, right = false, shoot = false;
 	
-	
 	public PlayerWeapons playerWeapons;
 	
 	public Player(double xPos, double yPos, int width, int height, BasicBlocks blocks){
@@ -32,8 +32,9 @@ public class Player implements KeyListener{
 		this.yPos = yPos;
 		this.width = width;
 		this.height = height;
+		this.health = 3;
 		
-		rect = new Rectangle((int) xPos,(int) yPos, width, height);
+		rect = new Rectangle((int) xPos,(int) yPos+25, width, height-25);
 		
 		try{
 			URL url = this.getClass().getResource("/com/dregronprogram/images/Player.png");
@@ -98,5 +99,20 @@ public class Player implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void hit() {
+		setHealth(getHealth()-1);
+	}
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	public void setHealth(int health) {
+		this.health = health;
+	}
 
+	public Rectangle getRect() {
+		return rect;
+	}
 }

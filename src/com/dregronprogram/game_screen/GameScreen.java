@@ -36,6 +36,9 @@ public class GameScreen implements SuperStateMachine{
 		g.setColor(Color.white);
 		g.drawString("Score: " + SCORE, 5, 15);
 		
+		g.setColor(Color.red);
+		g.drawString("Health: " + player.getHealth(), 5, 35);
+		
 		blocks.draw(g);
 		player.draw(g);
 		level.draw(g);
