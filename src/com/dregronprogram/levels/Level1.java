@@ -7,17 +7,20 @@ import com.dregronprogram.enemy_types.EnemyType;
 import com.dregronprogram.enemy_types.EnemyTypeBasic;
 import com.dregronprogram.game_screen.BasicBlocks;
 import com.dregronprogram.game_screen.Player;
+import com.dregronprogram.handler.EnemyBulletHandler;
 
 public class Level1 implements SuperLevel{
 
 	private Player player;
 	private ArrayList<EnemyType> enemies = new ArrayList<EnemyType>();
+	private EnemyBulletHandler bulletHandler;
 	
-	public Level1(Player player){
+	public Level1(Player player, EnemyBulletHandler bulletHandler){
 		this.player = player;
+		this.bulletHandler = bulletHandler;
 		for(int y = 0; y < 5; y++){
 			for(int x = 0; x < 10; x++){
-				EnemyType e = new EnemyTypeBasic(150 + (x * 40), 25 + (y * 40), 1 , 3);
+				EnemyType e = new EnemyTypeBasic(150 + (x * 40), 25 + (y * 40), 1 , 3, bulletHandler);
 				enemies.add(e);
 			}
 		}
@@ -31,6 +34,7 @@ public class Level1 implements SuperLevel{
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).draw(g);
 		}
+		bulletHandler.draw(g);
 	}
 
 	@Override
@@ -45,6 +49,7 @@ public class Level1 implements SuperLevel{
 			enemies.get(i).collide(i, player, blocks, enemies);
 		}
 		hasDirectionChange(delta);
+		bulletHandler.update(delta, blocks, player);
 	}
 
 	@Override

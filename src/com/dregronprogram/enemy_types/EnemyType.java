@@ -5,14 +5,25 @@ import java.util.ArrayList;
 
 import com.dregronprogram.game_screen.BasicBlocks;
 import com.dregronprogram.game_screen.Player;
+import com.dregronprogram.handler.EnemyBulletHandler;
 
-public interface EnemyType {
-
-	void draw(Graphics2D g);
-	void update(double delta, Player player, BasicBlocks blocks);
-	void changeDirection(double delta);
+public abstract class EnemyType {
 	
-	boolean deathScene();
-	boolean collide(int i, Player player, BasicBlocks blocks, ArrayList<EnemyType> enemys);
-	boolean isOutOfBounds();
+	private EnemyBulletHandler bulletHandler;
+	
+	public EnemyType(EnemyBulletHandler bulletHandler) {
+		this.bulletHandler = bulletHandler;
+	}
+
+	public abstract void draw(Graphics2D g);
+	public abstract void update(double delta, Player player, BasicBlocks blocks);
+	public abstract void changeDirection(double delta);
+	
+	public abstract boolean deathScene();
+	public abstract boolean collide(int i, Player player, BasicBlocks blocks, ArrayList<EnemyType> enemys);
+	public abstract boolean isOutOfBounds();
+	
+	public EnemyBulletHandler getBulletHandler() {
+		return bulletHandler;
+	}
 }

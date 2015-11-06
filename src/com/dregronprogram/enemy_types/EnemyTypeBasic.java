@@ -3,21 +3,30 @@ package com.dregronprogram.enemy_types;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.dregronprogram.display.Display;
+import com.dregronprogram.enemy_bullets.EnemyBasicBullet;
 import com.dregronprogram.game_screen.BasicBlocks;
 import com.dregronprogram.game_screen.GameScreen;
 import com.dregronprogram.game_screen.Player;
+import com.dregronprogram.handler.EnemyBulletHandler;
 import com.dregronprogram.sprite.SpriteAnimation;
+import com.dregronprogram.timer.Timer;
 
-public class EnemyTypeBasic implements EnemyType{
+public class EnemyTypeBasic extends EnemyType{
 
 	private double speed = 1.0d; 
 	
 	private Rectangle rect;
 	private SpriteAnimation enemySprite;
 	
-	public EnemyTypeBasic(double xPos, double yPos, int rows, int columns){
+	private int shootTime;
+	private Timer shootTimer;
+	
+	public EnemyTypeBasic(double xPos, double yPos, int rows, int columns, EnemyBulletHandler bulletHandler){
+		super(bulletHandler);
+		
 		enemySprite = new SpriteAnimation(xPos, yPos, rows, columns, 300, "/com/dregronprogram/images/Invaders.png");
 		enemySprite.setWidth(25);
 		enemySprite.setHeight(25);
@@ -25,6 +34,9 @@ public class EnemyTypeBasic implements EnemyType{
 		
 		this.setRect(new Rectangle((int) enemySprite.getxPos(), (int) enemySprite.getyPos(), enemySprite.getWidth(), enemySprite.getHeight()));
 		enemySprite.setLoop(true);
+		
+		shootTimer = new Timer();
+		shootTime = new Random().nextInt(12000);
 	}
 	
 	@Override
@@ -38,6 +50,11 @@ public class EnemyTypeBasic implements EnemyType{
 		
 		enemySprite.setxPos(enemySprite.getxPos() - (delta * speed));
 		this.getRect().x = (int) enemySprite.getxPos();
+		
+		if (shootTimer.timerEvent(shootTime)) {
+			getBulletHandler().addBullet(new EnemyBasicBullet(getRect().x, getRect().y));
+			shootTime = new Random().nextInt(12000);
+		}
 	}
 
 	@Override
