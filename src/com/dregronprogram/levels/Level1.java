@@ -18,12 +18,7 @@ public class Level1 implements SuperLevel{
 	public Level1(Player player, EnemyBulletHandler bulletHandler){
 		this.player = player;
 		this.bulletHandler = bulletHandler;
-		for(int y = 0; y < 5; y++){
-			for(int x = 0; x < 10; x++){
-				EnemyType e = new EnemyTypeBasic(150 + (x * 40), 25 + (y * 40), 1 , 3, bulletHandler);
-				enemies.add(e);
-			}
-		}
+		addEnemies();
 	}
 	
 	@Override
@@ -73,7 +68,7 @@ public class Level1 implements SuperLevel{
 
 	@Override
 	public boolean isGameOver() {
-		return false;
+		return player.getHealth() <= 0;
 	}
 
 	@Override
@@ -83,6 +78,19 @@ public class Level1 implements SuperLevel{
 
 	@Override
 	public void reset() {
+		player.reset();
+		enemies.clear();
+		addEnemies();
 		
+		bulletHandler.reset();
+	}
+	
+	public void addEnemies() {
+		for(int y = 0; y < 5; y++){
+			for(int x = 0; x < 10; x++){
+				EnemyType e = new EnemyTypeBasic(150 + (x * 40), 25 + (y * 40), 1 , 3, bulletHandler);
+				enemies.add(e);
+			}
+		}
 	}
 }

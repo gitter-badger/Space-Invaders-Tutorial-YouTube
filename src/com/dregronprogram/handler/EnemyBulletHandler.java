@@ -33,5 +33,9 @@ public class EnemyBulletHandler {
 			}
 		}
 	}
+
+	public void reset() {
+		weaponTypes.clear();
+	}
 	
 }

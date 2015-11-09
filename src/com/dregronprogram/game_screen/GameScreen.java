@@ -2,12 +2,14 @@ package com.dregronprogram.game_screen;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.dregronprogram.display.Display;
 import com.dregronprogram.handler.EnemyBulletHandler;
 import com.dregronprogram.levels.Level1;
 import com.dregronprogram.state.SuperStateMachine;
+import com.dregronprogram.timer.TickTimer;
 
 public class GameScreen implements SuperStateMachine{
 	
@@ -17,6 +19,9 @@ public class GameScreen implements SuperStateMachine{
 	private EnemyBulletHandler bulletHandler;
 	
 	public static int SCORE = 0;
+	
+	private Font gameScreen = new Font("Arial", Font.PLAIN, 48);
+	private TickTimer gameOverTimer = new TickTimer(180);
 	
 	public GameScreen(){
 		blocks = new BasicBlocks();
@@ -29,6 +34,13 @@ public class GameScreen implements SuperStateMachine{
 	public void update(double delta) {
 		player.update(delta);
 		level.update(delta, blocks);
+		
+		if (level.isGameOver()) {
+			gameOverTimer.tick(delta);
+			if (gameOverTimer.isEventReady()) {
+				level.reset();
+			}
+		}
 	}
 	
 	@Override
@@ -42,6 +54,14 @@ public class GameScreen implements SuperStateMachine{
 		blocks.draw(g);
 		player.draw(g);
 		level.draw(g);
+		
+		if (level.isGameOver()) {
+			g.setColor(Color.red);
+			g.setFont(gameScreen);
+			String gameOver = "GAME OVER!";
+			int gameOverWidth = g.getFontMetrics().stringWidth(gameOver);
+			g.drawString(gameOver, (Display.WIDTH/2)-(gameOverWidth/2), Display.HEIGHT/2);
+		}
 	}
 
 	@Override

@@ -115,4 +115,8 @@ public class Player implements KeyListener{
 	public Rectangle getRect() {
 		return rect;
 	}
+
+	public void reset() {
+		health = 3;
+	}
 }
