@@ -8,10 +8,11 @@ import java.awt.Graphics2D;
 import com.dregronprogram.display.Display;
 import com.dregronprogram.handler.EnemyBulletHandler;
 import com.dregronprogram.levels.Level1;
+import com.dregronprogram.state.StateMachine;
 import com.dregronprogram.state.SuperStateMachine;
 import com.dregronprogram.timer.TickTimer;
 
-public class GameScreen implements SuperStateMachine{
+public class GameScreen extends SuperStateMachine {
 	
 	private Player player;
 	private BasicBlocks blocks;
@@ -23,7 +24,8 @@ public class GameScreen implements SuperStateMachine{
 	private Font gameScreen = new Font("Arial", Font.PLAIN, 48);
 	private TickTimer gameOverTimer = new TickTimer(180);
 	
-	public GameScreen(){
+	public GameScreen(StateMachine stateMachine){
+		super(stateMachine);
 		blocks = new BasicBlocks();
 		bulletHandler = new EnemyBulletHandler();
 		player = new Player(Display.WIDTH/2-50, Display.HEIGHT-75, 50, 50, blocks);
@@ -39,6 +41,7 @@ public class GameScreen implements SuperStateMachine{
 			gameOverTimer.tick(delta);
 			if (gameOverTimer.isEventReady()) {
 				level.reset();
+				getStateMachine().setState((byte) 0);
 			}
 		}
 	}

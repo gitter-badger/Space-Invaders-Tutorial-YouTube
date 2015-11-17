@@ -19,7 +19,7 @@ public class Player implements KeyListener{
 	
 	private BufferedImage pSprite;
 	private Rectangle rect;
-	private double xPos, yPos;
+	private double xPos, yPos, startXPos, startYPos;
 	private int width, height;
 	private BasicBlocks blocks;
 	
@@ -30,6 +30,8 @@ public class Player implements KeyListener{
 	public Player(double xPos, double yPos, int width, int height, BasicBlocks blocks){
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.startXPos = xPos;
+		this.startYPos = yPos;
 		this.width = width;
 		this.height = height;
 		this.health = 3;
@@ -118,5 +120,13 @@ public class Player implements KeyListener{
 
 	public void reset() {
 		health = 3;
+		left = false;
+		right = false;
+		shoot = false;
+		
+		xPos = startXPos;
+		yPos = startYPos;
+		rect.x = (int) xPos;
+		rect.y = (int) yPos+25;
 	}
 }
