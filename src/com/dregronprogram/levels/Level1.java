@@ -8,6 +8,7 @@ import com.dregronprogram.enemy_types.EnemyTypeBasic;
 import com.dregronprogram.game_screen.BasicBlocks;
 import com.dregronprogram.game_screen.Player;
 import com.dregronprogram.handler.EnemyBulletHandler;
+import com.dregronprogram.sound.Sound;
 
 public class Level1 implements SuperLevel{
 
@@ -15,10 +16,16 @@ public class Level1 implements SuperLevel{
 	private ArrayList<EnemyType> enemies = new ArrayList<EnemyType>();
 	private EnemyBulletHandler bulletHandler;
 	
+	private Sound beep, boop;
+	private boolean beepboop;
+	
 	public Level1(Player player, EnemyBulletHandler bulletHandler){
 		this.player = player;
 		this.bulletHandler = bulletHandler;
 		addEnemies();
+		
+		beep = new Sound("/com/dregronprogram/sounds/beep.wav");
+		boop = new Sound("/com/dregronprogram/sounds/boop.wav");
 	}
 	
 	@Override
@@ -63,6 +70,13 @@ public class Level1 implements SuperLevel{
 	public void changeDurectionAllEnemys(double delta) {
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).changeDirection(delta);
+		}
+		if (beepboop) {
+			beepboop = false;
+			boop.play();
+		} else {
+			beepboop = true;
+			beep.play();
 		}
 	}
 
