@@ -12,6 +12,7 @@ public interface SuperLevel {
 	void changeDurectionAllEnemys(double delta);
 	
 	boolean isGameOver();
+	boolean isComplete();
 	
 	void destory();
 	void reset();

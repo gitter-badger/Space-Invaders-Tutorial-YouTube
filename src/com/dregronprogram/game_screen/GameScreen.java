@@ -23,6 +23,7 @@ public class GameScreen extends SuperStateMachine {
 	
 	private Font gameScreen = new Font("Arial", Font.PLAIN, 48);
 	private TickTimer gameOverTimer = new TickTimer(180);
+	private TickTimer completeTimer = new TickTimer(180);
 	
 	public GameScreen(StateMachine stateMachine){
 		super(stateMachine);
@@ -41,7 +42,16 @@ public class GameScreen extends SuperStateMachine {
 			gameOverTimer.tick(delta);
 			if (gameOverTimer.isEventReady()) {
 				level.reset();
+				blocks.reset();
 				getStateMachine().setState((byte) 0);
+				SCORE = 0;
+			}
+		}
+		
+		if (level.isComplete()) {
+			completeTimer.tick(delta);
+			if (completeTimer.isEventReady()) {
+				level.reset();
 			}
 		}
 	}
@@ -64,6 +74,14 @@ public class GameScreen extends SuperStateMachine {
 			String gameOver = "GAME OVER!";
 			int gameOverWidth = g.getFontMetrics().stringWidth(gameOver);
 			g.drawString(gameOver, (Display.WIDTH/2)-(gameOverWidth/2), Display.HEIGHT/2);
+		}
+		
+		if (level.isComplete()) {
+			g.setColor(Color.green);
+			g.setFont(gameScreen);
+			String complete = "LEVEL COMPLETE!";
+			int completeWidth = g.getFontMetrics().stringWidth(complete);
+			g.drawString(complete, (Display.WIDTH/2)-(completeWidth/2), Display.HEIGHT/2);
 		}
 	}
 

@@ -107,4 +107,9 @@ public class Level1 implements SuperLevel{
 			}
 		}
 	}
+
+	@Override
+	public boolean isComplete() {
+		return enemies.isEmpty();
+	}
 }

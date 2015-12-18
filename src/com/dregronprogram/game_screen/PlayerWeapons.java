@@ -43,12 +43,16 @@ public class PlayerWeapons {
 	}
 	
 	public void shootBullet(double xPos, double yPos, int width, int height){
-		if(timer.timerEvent(250) && weapons.size() < 3) {
+		if(timer.timerEvent(250)) {
 			if (shootSound.isPlaying()) {
 				shootSound.stop();
 			}
 			shootSound.play();
 			weapons.add(new MachineGun(xPos + 22, yPos + 15, width, height));
 		}
+	}
+
+	public void reset() {
+		weapons.clear();
 	}
 }

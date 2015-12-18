@@ -128,5 +128,6 @@ public class Player implements KeyListener{
 		yPos = startYPos;
 		rect.x = (int) xPos;
 		rect.y = (int) yPos+25;
+		playerWeapons.reset();
 	}
 }
