@@ -11,6 +11,7 @@ import com.dregronprogram.game_screen.BasicBlocks;
 import com.dregronprogram.game_screen.GameScreen;
 import com.dregronprogram.game_screen.Player;
 import com.dregronprogram.handler.EnemyBulletHandler;
+import com.dregronprogram.sound.Sound;
 import com.dregronprogram.sprite.SpriteAnimation;
 import com.dregronprogram.timer.Timer;
 
@@ -23,6 +24,8 @@ public class EnemyTypeBasic extends EnemyType{
 	
 	private int shootTime;
 	private Timer shootTimer;
+	
+	private Sound explosionSound;
 	
 	public EnemyTypeBasic(double xPos, double yPos, int rows, int columns, EnemyBulletHandler bulletHandler){
 		super(bulletHandler);
@@ -37,6 +40,8 @@ public class EnemyTypeBasic extends EnemyType{
 		
 		shootTimer = new Timer();
 		shootTime = new Random().nextInt(12000);
+		
+		explosionSound = new Sound("/com/dregronprogram/sounds/explosion.wav");
 	}
 	
 	@Override
@@ -73,6 +78,9 @@ public class EnemyTypeBasic extends EnemyType{
 			return false;
 		
 		if(enemySprite.isSpriteAnimDestroyed()) {
+			if (!explosionSound.isPlaying()) {
+				explosionSound.play();
+			}
 			return true;
 		}
 		
